@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
 import { GatewayRepository } from './gateway.repository';
-import { PAYMENTS_SERVICE } from '@app/common';
+import { PAYMENTS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
 
@@ -13,9 +13,15 @@ export class GatewayService {
     @Inject(PAYMENTS_SERVICE) private readonly paymentsService: ClientProxy,
   ) {}
 
-  async create(createGatewayDto: CreateGatewayDto, userId: string) {
+  async create(
+    createGatewayDto: CreateGatewayDto,
+    { email, _id: userId }: UserDto,
+  ) {
     return this.paymentsService
-      .send('create_charge', createGatewayDto.charge)
+      .send('create_charge', {
+        ...createGatewayDto.charge,
+        email,
+      })
       .pipe(
         map((res) => {
           return this.gatewayRepository.create({

@@ -23,7 +23,7 @@ export class GatewayController {
     @Body() createGatewayDto: CreateGatewayDto,
     @CurrentUser() user: UserDto,
   ) {
-    return await this.gatewayService.create(createGatewayDto, user._id);
+    return await this.gatewayService.create(createGatewayDto, user);
   }
 
   @Get()
