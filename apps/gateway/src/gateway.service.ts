@@ -4,20 +4,28 @@ import { UpdateGatewayDto } from './dto/update-gateway.dto';
 import { GatewayRepository } from './gateway.repository';
 import { PAYMENTS_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { map } from 'rxjs';
 
 @Injectable()
 export class GatewayService {
   constructor(
     private readonly gatewayRepository: GatewayRepository,
-    @Inject(PAYMENTS_SERVICE) paymentsService: ClientProxy,
+    @Inject(PAYMENTS_SERVICE) private readonly paymentsService: ClientProxy,
   ) {}
 
   async create(createGatewayDto: CreateGatewayDto, userId: string) {
-    return this.gatewayRepository.create({
-      ...createGatewayDto,
-      timestamp: new Date(),
-      userId,
-    });
+    return this.paymentsService
+      .send('create_charge', createGatewayDto.charge)
+      .pipe(
+        map((res) => {
+          return this.gatewayRepository.create({
+            ...createGatewayDto,
+            invoiceId: res.id,
+            timestamp: new Date(),
+            userId,
+          });
+        }),
+      );
   }
 
   async findAll() {
