@@ -1,13 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
 import { GatewayRepository } from './gateway.repository';
+import { PAYMENTS_SERVICE } from '@app/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class GatewayService {
-  constructor(private readonly gatewayRepository: GatewayRepository) {}
+  constructor(
+    private readonly gatewayRepository: GatewayRepository,
+    @Inject(PAYMENTS_SERVICE) paymentsService: ClientProxy,
+  ) {}
 
-  create(createGatewayDto: CreateGatewayDto, userId: string) {
+  async create(createGatewayDto: CreateGatewayDto, userId: string) {
     return this.gatewayRepository.create({
       ...createGatewayDto,
       timestamp: new Date(),
@@ -15,15 +20,15 @@ export class GatewayService {
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.gatewayRepository.find({});
   }
 
-  findOne(_id: string) {
+  async findOne(_id: string) {
     return this.gatewayRepository.findOne({ _id });
   }
 
-  update(_id: string, updateGatewayDto: UpdateGatewayDto) {
+  async update(_id: string, updateGatewayDto: UpdateGatewayDto) {
     return this.gatewayRepository.findOneAndUpdate(
       { _id },
       {
@@ -32,7 +37,7 @@ export class GatewayService {
     );
   }
 
-  remove(_id: string) {
+  async remove(_id: string) {
     return this.gatewayRepository.findOneAndDelete({ _id });
   }
 }
