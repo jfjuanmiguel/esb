@@ -7,11 +7,11 @@ import { GatewayRepository } from './gateway.repository';
 export class GatewayService {
   constructor(private readonly gatewayRepository: GatewayRepository) {}
 
-  create(createGatewayDto: CreateGatewayDto) {
+  create(createGatewayDto: CreateGatewayDto, userId: string) {
     return this.gatewayRepository.create({
       ...createGatewayDto,
       timestamp: new Date(),
-      userId: '123',
+      userId,
     });
   }
 
