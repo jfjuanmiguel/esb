@@ -1,0 +1,68 @@
+steps:
+  # Gateway
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+     'build',
+     '-t',
+     'us-east4-docker.pkg.dev/enterprise-service-bus-410800/gateway/production',
+     '-f',
+     'apps/gateway/Dockerfile',
+     '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/gateway/production'
+    ]
+
+  # Auth
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/auth/production',
+      '-f',
+      'apps/auth/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/auth/production'
+    ]
+
+  # Notifications
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/notifications/production',
+      '-f',
+      'apps/notifications/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/notifications/production'
+    ]
+
+  # Payments
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/payments/production',
+      '-f',
+      'apps/payments/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/payments/production'
+    ]
