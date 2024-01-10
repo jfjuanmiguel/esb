@@ -2,17 +2,16 @@ steps:
   # Gateway
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'build',
-     '-t',
-     'us-east4-docker.pkg.dev/enterprise-service-bus-410800/gateway/production',
-     '-f',
-     'apps/gateway/Dockerfile',
-     '.'
+      'build',
+      '-t',
+      'us-east4-docker.pkg.dev/enterprise-service-bus-410800/gateway/production',
+      '-f',
+      'apps/gateway/Dockerfile',
+      '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      '-t',
       'us-east4-docker.pkg.dev/enterprise-service-bus-410800/gateway/production'
     ]
 
@@ -29,7 +28,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      '-t',
       'us-east4-docker.pkg.dev/enterprise-service-bus-410800/auth/production'
     ]
 
@@ -46,7 +44,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      '-t',
       'us-east4-docker.pkg.dev/enterprise-service-bus-410800/notifications/production'
     ]
 
@@ -63,6 +60,5 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      '-t',
       'us-east4-docker.pkg.dev/enterprise-service-bus-410800/payments/production'
     ]
