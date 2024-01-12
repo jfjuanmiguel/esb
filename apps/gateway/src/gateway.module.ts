@@ -6,6 +6,7 @@ import { GatewayDocument, GatewaySchema } from './models/gateway.schema';
 import {
   AUTH_SERVICE,
   DatabaseModule,
+  HealthModule,
   LoggerModule,
   PAYMENTS_SERVICE,
 } from '@app/common';
@@ -55,6 +56,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         inject: [ConfigService],
       },
     ]),
+    HealthModule,
   ],
   controllers: [GatewayController],
   providers: [GatewayService, GatewayRepository],
