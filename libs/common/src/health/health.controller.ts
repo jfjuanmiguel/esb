@@ -5,7 +5,7 @@ export class HealthController {
   @Get()
   health() {
     return {
-      serverStatus: 'running',
+      status: 'running',
     };
   }
 }
